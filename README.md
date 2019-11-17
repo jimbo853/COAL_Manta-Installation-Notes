@@ -35,4 +35,30 @@ https://joyent.github.io/manta/
 
 The relevant section in the "Operator's Guide" is "Deploying Manta"
 
+I found installing Manta to be more difficult than installing COAL because some of the command usage was not that clear to me. As such I'll include a bit more detail in itemizing the steps below. I would still recommend reading the Op Guide as you go. The initial steps are all done from the global zone of the headnode:
+
+/usbkey/scripts/setup_manta_zone.sh
+/zones/$(vmadm lookup alias=manta0)/root/opt/smartdc/manta-deployment/networking/gen-coal.sh > /var/tmp/netconfig.json
+ln -s /zones/$(vmadm lookup alias=manta0)/root/opt/smartdc/manta-deployment/networking /var/tmp/networking
+cd /var/tmp/networking
+./manta-net.sh netconfig.json
+
+The next part of the installation must be done from within the new Manta zone 0. The Op Guide doesn't make this very clear but you're able to login to the zone, next set of steps fall into place:
+
+Login to manta0:
+
+sdc-login manta0
+
+You can logout; i.e. back to the global zone of the headnode with:
+
+exit
+
+Once you're logged in, the following commands should complete the basic Manta deployment:
+
+Replace the given email with your own...
+manta-init -s "coal" -e "jimbo.cooper853@gmail.com"
+manta-deploy-coal
+
+
+
 
