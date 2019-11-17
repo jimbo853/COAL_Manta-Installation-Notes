@@ -1,37 +1,37 @@
 # COAL_Manta-Installation-Notes
 Notes and logs detailing the installation of Manta on Triton/COAL
 
-All the procedures outlined below have been tested on both Windows 10 and iMac Pro machines. I'll include software version numbers wherever possible as well as other requirement details such as disk and memory used.
+All the procedures outlined below have been tested on both Windows 10 and iMac Pro (Catalina) machines. I'll include software version numbers wherever possible as well as other requirement details such as disk and memory.
 
-Step #1: Install Triton/Coal on VMware Workstation 15.5.1
+# Step #1: Install Triton/Coal on VMware Workstation 15.5.1
 
 https://github.com/joyent/triton/blob/master/docs/developer-guide/coal-setup.md
 
-Note: The coal-setup as configured above works well with a basic installation but doesn't work with a Manta install. I'm not sure what the limit is on memory or disk but I can say that 16gb and 400gb does work.
+Note: The coal-setup as configured above works well with a basic installation but doesn't work with a Manta install. I'm not sure what the limit is on memory or disk but I can say that 16 GB and 400 GB does work.
 
 Follow all the steps exactly down to the completion of the "Adding external Nics" step.
 
 I didn't set up the "Cloud API" or "Fabrics" although I'm sure this might be worth doing eventually.
 
-Also, I would recommend doing a pass through the section on "Maintaining Coal" as this includes the steps for performing updates on the various sub-systems.
+Also, I would recommend doing a once through the section on "Maintaining Coal" as this includes the steps for performing updates on the various sub-systems.
 
 If you're doing this on VMware Workstation, I would recommend installing WinSCP to enable access (traversing, uploading, downloading, editing) to the file system through a visual interface. The required IP should be 10.88.88.200
 
 Also, WinSCP provides access to a PuTTY terminal which I find to be better than VMware as a command line interface.
 
-I would recommend shutting the system down manually from the command line as allowing VMware to do seems to cause corruption.
+I would recommend shutting the system down manually from the command line as allowing VMware to shutdown the OS seems to cause corruption.
 
 The command to shutdown gracefully is: shutdown -y -g0 -i5 halt
 
-I would recommend that whenever you are restarting COAL to allow the boot to finish starting all zones before doing anything of consequence. The best way to know when the startup is complete is to check the health.
+I would recommend that whenever you are restarting COAL, allow the boot to finish starting all zones before doing anything of consequence. The best way to know when the startup is complete is to check the health.
 
 sdcadm health
 
-will tell you if all the zones are running without issue.
+... will tell you if all the zones are running without issue.
 
 Finally, all this assumes that you are logging in as "root" and using the "rootpass" password as defined when you performed Step #1. 
 
-Step #2: Install Manta
+# Step #2: Install Manta
 
 https://joyent.github.io/manta/
 
@@ -45,7 +45,7 @@ ln -s /zones/$(vmadm lookup alias=manta0)/root/opt/smartdc/manta-deployment/netw
 cd /var/tmp/networking
 ./manta-net.sh netconfig.json
 
-The next part of the installation must be done from within the new Manta zone 0. The Op Guide doesn't make this very clear but you're able to login to the zone, next set of steps fall into place:
+The next part of the installation must be done from within the new Manta zone 0. The Op Guide doesn't make this very clear but you'll need to login to the zone, before doing any further Manta installation steps:
 
 Login to manta0:
 
@@ -57,11 +57,12 @@ exit
 
 Once you're logged in, the following commands should complete the basic Manta deployment:
 
-Replace the given email with your own...
+(Replace the given email with your own...)
+
 manta-init -s "coal" -e "jimbo.cooper853@gmail.com"
 manta-deploy-coal
 
-The manta-deploy-coal takes a long time to finish and this where I experienced errors until I had allocated enough memory and disk within VMware prior to the initial install.
+The manta-deploy-coal takes a long time to finish and this is where I experienced errors until I had allocated enough memory and disk within VMware prior to the initial install (Step #1).
 
 When the deployment is complete, logout of the mant0 zone with "exit" 
 
@@ -73,9 +74,9 @@ zfs list zones
 
 manta-adm show storage
 
-At this point I would recommend rebotting the syste with "reboot" and after waiting until the system fully restarts and logging in again as root, you can install nodejs.
+At this point I would recommend rebooting the system with "reboot" and after waiting until the system fully restarts and logging in again as root, you can install nodejs.
 
-Step #3: Install pkgin and node
+# Step #3: Install pkgin and node
 
 Following login, backout to the root of the headnode with:
 
