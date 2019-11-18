@@ -101,5 +101,5 @@ pkgin -y install npm
 
 .. to install the node package manager
 
-I'm still having a problem getting the latest version of node (the above installs 10.6.0)
+I'm still having a problem getting the latest version of node installed (the previous steps install 10.6.0). In contrast we need 12.13.0
 
