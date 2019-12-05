@@ -40,6 +40,16 @@ The relevant section in the "Operator's Guide" is "Deploying Manta"
 I found installing Manta to be more difficult than installing COAL because some of the command usage was not that clear to me. As such I'll include a bit more detail in itemizing the steps below. I would still recommend reading the Op Guide as you go. The initial steps are all done from the global zone of the headnode:
 
 /usbkey/scripts/setup_manta_zone.sh
+
+Replace the previous with:
+sdcadm post-setup manta --mantav1
+
+Note: set the update channel to "dev" with:
+sdcadm channel set dev
+
+...then update sdcadm with:
+sdcadm self-update --latest
+
 /zones/$(vmadm lookup alias=manta0)/root/opt/smartdc/manta-deployment/networking/gen-coal.sh > /var/tmp/netconfig.json
 ln -s /zones/$(vmadm lookup alias=manta0)/root/opt/smartdc/manta-deployment/networking /var/tmp/networking
 cd /var/tmp/networking
