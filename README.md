@@ -72,7 +72,7 @@ Once you're logged in, the following commands should complete the basic Manta de
 
 (Replace the given email with your own...)
 
-manta-init -s "coal" -e "jimbo.cooper853@gmail.com"
+manta-init -s "coal" -e "your_email@gmail.com"
 manta-deploy-coal
 
 The manta-deploy-coal takes a long time to finish and this is where I experienced errors until I had allocated enough memory and disk within VMware prior to the initial install (Step #1).
