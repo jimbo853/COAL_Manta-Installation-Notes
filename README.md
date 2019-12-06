@@ -51,8 +51,11 @@ sdcadm channel set dev
 sdcadm self-update --latest
 
 /zones/$(vmadm lookup alias=manta0)/root/opt/smartdc/manta-deployment/networking/gen-coal.sh > /var/tmp/netconfig.json
+
 ln -s /zones/$(vmadm lookup alias=manta0)/root/opt/smartdc/manta-deployment/networking /var/tmp/networking
+
 cd /var/tmp/networking
+
 ./manta-net.sh netconfig.json
 
 The next part of the installation must be done from within the new Manta zone 0. The Op Guide doesn't make this very clear but you'll need to login to the zone, before doing any further Manta installation steps:
